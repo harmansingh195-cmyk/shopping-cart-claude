@@ -1,0 +1,1 @@
+package com.example.shop.model; public record Product(Long id,String name,double price,String image){}
