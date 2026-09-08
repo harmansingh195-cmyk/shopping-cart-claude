@@ -105,6 +105,10 @@ If tests cannot run:
 
 Never silently skip testing.
 ----------
+
+## Output
+Generate impl-done.md
+
 ## Mandatory Response Format
 
 # Implementation Summary
@@ -163,7 +167,7 @@ List limitations.
 ## Recommended Next Steps
 List follow-up work.
 -------------
-## Completion Criteria
+# Completion Criteria
 Implementation is complete only if:
 - Code generated
 - Dependencies added when required

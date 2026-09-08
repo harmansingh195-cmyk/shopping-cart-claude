@@ -15,14 +15,15 @@ Convert the provided user story into `requirements.md`.
 
 1) Ask clarifying questions on Jira Story (flows, data, rules, edge cases, NFRs).
 2) Wait for answers.
-3) Produce requirements.md with:
+3) Add clarifying questions and answers to JIRA story Comment
+4) Produce requirements.md with:
    - Scope/overview
    - Assumptions
    - Functional requirements (numbered)
    - Non-functional requirements
    - Acceptance criteria (Given/When/Then)
    - Out of scope
-4) In the output, include a short `Source` note:
+5) In the output, include a short `Source` note:
    - `Jira: <KEY>` when fetched from Jira, or
    - `User-provided story text` when fallback input was used.
 

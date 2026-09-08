@@ -16,8 +16,7 @@ When the implementation is complete:
 4. Always Create a new Pull Request against the target branch(main).
 5. Generate the PR description using the template below.
 6. Include test evidence from verification-report.md.
-7. Add changelog information if the repository requires it.
-8. Add a reviewer checklist before submitting the PR.
+7. Add a reviewer checklist before submitting the PR.
 
 ## Pull Request Template
 
