@@ -1,0 +1,18 @@
+{
+  "name": "shopping-cart-search-tests",
+  "version": "1.0.0",
+  "description": "Dev-only Vitest unit tests for the search Filter Engine (filterProductsByName) and Playwright E2E browser acceptance tests. No production runtime dependency.",
+  "private": true,
+  "scripts": {
+    "test": "vitest run",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0",
+    "jsdom": "^24.1.0",
+    "vitest": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

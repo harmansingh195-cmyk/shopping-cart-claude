@@ -1,7 +1,6 @@
 ---
 name: 04-impl-planner-agent
 description: 'Breaks the approved architecture and design review into a dependency-ordered impl-plan.md with milestones and priorities.'
-tools: ['read', 'edit', 'search']
 ---
 
 # Purpose

@@ -5,7 +5,7 @@ from pathlib import Path
 
 DOC_PRECONDITIONS = {
     "architecture.md": ["requirements.md"],
-    "design-review.md": ["architecture.md"],
+    "design-review.md": ["architecture.mxd"],
     "impl-plan.md": ["architecture.md"],
     "review-report.md": ["verification-report.md"],
     "pr-description.md": ["review-report.md"],
