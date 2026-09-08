@@ -17,7 +17,7 @@ Follow the `08-pr-writer` skill for the full workflow: staging and committing ch
 
 ## Human-in-the-Loop Checkpoint
 
-- This phase performs the workflow's only externally-visible, hard-to-reverse actions (commit, push, PR creation). A `preToolUse` hook independently checks `src/docs/review-report.md` for a "Ready for PR" assessment before allowing `git push` / `gh pr create` / `gh pr merge`, and will still prompt for explicit human confirmation on top of that even when the check passes.
+- This phase performs the workflow's only externally-visible, hard-to-reverse actions (commit, push, PR creation). Check `src/docs/review-report.md` for a "Ready for PR" assessment before allowing `git push` / `gh pr create` / `gh pr merge`, and will still prompt for explicit human confirmation on top of that even when the check passes.
 - Before running any of those commands, state plainly what you are about to do (branch, target, commit message, PR title) and give the user a chance to stop you.
 - If the review-report.md assessment is "Additional Changes Required" or missing, stop and tell the user to complete or re-run the Review phase instead of attempting to work around it.
 

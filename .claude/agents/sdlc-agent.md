@@ -73,7 +73,7 @@ All documents are generated in the `src/docs` folder:
 
 - Requirements -> `requirements.md`
 - Architecture -> `architecture.md`
-- Design Review -> `design-review.md`
+- Design Review -> `design-review.md` 
 - Planning -> `impl-plan.md`
 - Verification -> `verification-report.md`
 - Review -> `review-report.md`
