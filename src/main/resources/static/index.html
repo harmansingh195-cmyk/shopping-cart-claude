@@ -1,1 +1,125 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Modern Shop</title><style>body{font-family:Arial;background:linear-gradient(135deg,#667eea,#764ba2);margin:0}.wrap{max-width:1100px;margin:auto;padding:20px}.hero{color:#fff;text-align:center}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}.card,.cart{background:#fff;border-radius:18px;padding:18px;box-shadow:0 10px 25px rgba(0,0,0,.15)}button{background:#667eea;color:#fff;border:none;padding:10px 14px;border-radius:10px;cursor:pointer}.top{display:grid;grid-template-columns:3fr 1fr;gap:20px}.emoji{font-size:60px}</style></head><body><div class="wrap"><div class="hero"><h1>🛒 Modern Shopping Cart</h1><p>Capstone Demo Application</p></div><div class="top"><div><div class="grid" id="products"></div></div><div class="cart"><h3>Cart</h3><div id="items"></div><h2>₹ <span id="total">0</span></h2><button onclick="checkout()">Checkout</button></div></div></div><script>let products=[],cart=[];fetch('/api/products').then(r=>r.json()).then(d=>{products=d;document.getElementById('products').innerHTML=d.map(p=>`<div class=card><div class=emoji>${p.image}</div><h3>${p.name}</h3><p>₹${p.price}</p><button onclick=add(${p.id})>Add To Cart</button></div>`).join('')});function add(id){cart.push(products.find(x=>x.id===id));render()}function render(){document.getElementById('items').innerHTML=cart.map(x=>'<p>'+x.name+'</p>').join('');document.getElementById('total').innerText=cart.reduce((a,b)=>a+b.price,0)}function checkout(){alert('Order placed successfully! Total ₹'+document.getElementById('total').innerText);cart=[];render()}</script></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Modern Shop</title>
+  <style>
+    body { font-family: Arial; background: linear-gradient(135deg, #667eea, #764ba2); margin: 0 }
+    .wrap { max-width: 1100px; margin: auto; padding: 20px }
+    .hero { color: #fff; text-align: center }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px }
+    .card, .cart { background: #fff; border-radius: 18px; padding: 18px; box-shadow: 0 10px 25px rgba(0,0,0,.15) }
+    button { background: #667eea; color: #fff; border: none; padding: 10px 14px; border-radius: 10px; cursor: pointer }
+    .top { display: grid; grid-template-columns: 3fr 1fr; gap: 20px }
+    .emoji { font-size: 60px }
+    /* Search input styling — consistent with existing card/button palette */
+    .search-container { margin-bottom: 16px }
+    .search {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px 16px;
+      border: 2px solid #667eea;
+      border-radius: 10px;
+      font-family: Arial;
+      font-size: 16px;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, .2);
+      outline: none
+    }
+    .search:focus { border-color: #764ba2; box-shadow: 0 4px 12px rgba(118, 75, 162, .35) }
+    .no-results { text-align: center; color: #667eea; font-size: 18px; padding: 40px 0 }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1>&#x1F6D2; Modern Shopping Cart</h1>
+      <p>Capstone Demo Application</p>
+    </div>
+    <div class="top">
+      <div>
+        <!-- Search input positioned above the product grid; aria-label satisfies accessibility requirement -->
+        <div class="search-container">
+          <input
+            type="text"
+            id="search-input"
+            class="search"
+            placeholder="Search products..."
+            aria-label="Search products"
+          >
+        </div>
+        <div class="grid" id="products"></div>
+      </div>
+      <div class="cart">
+        <h3>Cart</h3>
+        <div id="items"></div>
+        <h2>&#x20B9; <span id="total">0</span></h2>
+        <button onclick="checkout()">Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let products = [], cart = [];
+
+    // Returns a debounced version of fn, firing at most once per delayMs milliseconds (trailing-edge).
+    // Used to avoid filtering on every keystroke — waits until the user pauses typing.
+    function debounce(fn, delayMs) {
+      let timer;
+      return function (...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn.apply(this, args), delayMs);
+      };
+    }
+
+    // Returns products whose name starts with rawSearchTerm (case-insensitive, min 2 chars).
+    // Pure function with no DOM access — safe to unit-test in a jsdom/Node environment.
+    function filterProductsByName(products, rawSearchTerm) {
+      const trimmed = (rawSearchTerm || '').trim();
+      if (trimmed.length < 2) return products;
+      return products.filter(p => p.name.toLowerCase().startsWith(trimmed.toLowerCase()));
+    }
+
+    // Renders the product list into #product-list; shows empty-state message if the list is empty.
+    // Existing onclick=add(...) attributes are regenerated on every innerHTML reassignment (cart safety).
+    function renderProducts(list) {
+      const container = document.getElementById('products');
+      if (list.length === 0) {
+        container.innerHTML = '<div class="no-results">No products found</div>';
+        return;
+      }
+      container.innerHTML = list.map(p =>
+        `<div class=card><div class=emoji>${p.image}</div><h3>${p.name}</h3><p>&#x20B9;${p.price}</p><button onclick=add(${p.id})>Add To Cart</button></div>`
+      ).join('');
+    }
+
+    // Fetches the product catalogue from the REST API and renders the initial product grid.
+    fetch('/api/products').then(r => r.json()).then(d => {
+      products = d;
+      renderProducts(products);
+    });
+
+    // Cart management: add an item, re-render the cart summary, and process checkout.
+    function add(id) { cart.push(products.find(x => x.id === id)); render(); }
+    function render() {
+      document.getElementById('items').innerHTML = cart.map(x => '<p>' + x.name + '</p>').join('');
+      document.getElementById('total').innerText = cart.reduce((a, b) => a + b.price, 0);
+    }
+    function checkout() {
+      alert('Order placed successfully! Total ₹' + document.getElementById('total').innerText);
+      cart = [];
+      render();
+    }
+
+    // Search Controller: wires together debounce -> filterProductsByName -> renderProducts.
+    // Reads products at invocation time (not at handler-creation time) to avoid a pre-fetch race.
+    // Debounce delay: 200 ms — prevents filtering on every individual keystroke.
+    const debouncedFilter = debounce(function () {
+      const value = document.getElementById('search-input').value;
+      const filtered = filterProductsByName(products, value);
+      renderProducts(filtered);
+    }, 200);
+
+    document.getElementById('search-input').addEventListener('input', debouncedFilter);
+  </script>
+</body>
+</html>

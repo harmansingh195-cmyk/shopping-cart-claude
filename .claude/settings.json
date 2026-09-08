@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 .github/hooks/scripts/guard_docs.py"
+            "command": "python3 .claude/hooks/guard_docs.py"
           }
         ]
       }

@@ -59,7 +59,7 @@ Do not invoke a phase agent if its required input artifacts do not exist yet. If
 - Invoke `03-design-review-agent` before `architecture.md` exists.
 - Invoke `04-impl-planner-agent.agent` before `design-review.md` exists.
 - Invoke `05-implementation-agent` before `impl-plan.md` exists.
-- Invoke `06-verification-agent` before `impl-done.md` exists.
+- Invoke `06-verification-agent` before `../../src/docs/impl-done.md` exists.
 - Invoke `07-code-review-agent` before `verification-report.md` exists.
 - Invoke `08-pr-agent` before `review-report.md` shows the change is ready for PR.
 
